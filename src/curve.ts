@@ -20,6 +20,7 @@ function deepMerge(base: unknown, override: unknown): unknown {
   }
   const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
   for (const [k, v] of Object.entries(override)) {
+    if (k === "__proto__" || k === "constructor" || k === "prototype") continue;
     out[k] = deepMerge((base as Record<string, unknown>)[k], v);
   }
   return out;

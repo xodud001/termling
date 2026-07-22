@@ -25,4 +25,11 @@ describe("curve", () => {
     expect(mergeCurve(DEFAULT_CURVE, null)).toEqual(DEFAULT_CURVE);
     expect(mergeCurve(DEFAULT_CURVE, undefined)).toEqual(DEFAULT_CURVE);
   });
+
+  it("__proto__/constructor 키는 병합에서 무시된다", () => {
+    const merged = mergeCurve(DEFAULT_CURVE, JSON.parse('{"__proto__":{"hacked":true},"xp":{"base":7}}'));
+    expect(merged.xp.base).toBe(7);
+    expect((merged as Record<string, unknown>)["hacked"]).toBeUndefined();
+    expect(({} as Record<string, unknown>)["hacked"]).toBeUndefined();
+  });
 });
