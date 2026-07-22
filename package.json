@@ -1,0 +1,17 @@
+{
+  "name": "termling",
+  "version": "0.1.0",
+  "description": "Claude Code 토큰으로 성장하는 터미널 수집형 펫",
+  "license": "MIT",
+  "bin": { "termling": "dist/src/cli/index.js" },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "engines": { "node": ">=20" },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

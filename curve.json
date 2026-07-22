@@ -1,0 +1,12 @@
+{
+  "xp": { "tokensPerXp": 1000, "base": 10, "exponent": 1.5, "maxLevel": 100 },
+  "evolution": { "gates": [10, 25, 40, 70] },
+  "egg": {
+    "rollPerTokens": 10000,
+    "encounterRate": 0.02,
+    "hatchXp": 50,
+    "dupeBonusXp": 500,
+    "speciesWeights": { "buggsy": 60, "daemo": 30, "kern": 10 }
+  },
+  "shiny": { "rate": 0.05 }
+}
