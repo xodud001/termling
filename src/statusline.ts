@@ -8,6 +8,12 @@ import { State } from "./types";
 const MAX_SESSIONS = 20;
 
 export function extractTotalTokens(input: unknown): number {
+  const cw = (input as { context_window?: unknown } | null)?.context_window;
+  if (cw && typeof cw === "object") {
+    const c = cw as Record<string, unknown>;
+    const sum = numberOrZero(c.total_input_tokens) + numberOrZero(c.total_output_tokens);
+    if (sum > 0) return sum;
+  }
   const cost = (input as { cost?: unknown } | null)?.cost;
   if (!cost || typeof cost !== "object") return 0;
   let sum = 0;
@@ -17,6 +23,10 @@ export function extractTotalTokens(input: unknown): number {
     }
   }
   return sum;
+}
+
+function numberOrZero(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
 export function sessionDelta(state: State, sessionId: string, total: number): number {

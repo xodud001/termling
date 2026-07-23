@@ -33,15 +33,23 @@ function sample(overrides: Partial<State> = {}): State {
 }
 
 describe("extractTotalTokens", () => {
-  it("cost의 *_tokens 숫자 필드를 전부 합산한다", () => {
+  it("context_window의 입력+출력 토큰을 합산한다 (1차 소스)", () => {
+    expect(
+      extractTotalTokens({
+        context_window: { total_input_tokens: 379_892, total_output_tokens: 280, context_window_size: 1_000_000 },
+        cost: { total_cost_usd: 53.9 },
+      }),
+    ).toBe(380_172);
+  });
+  it("context_window가 없으면 cost의 *_tokens 숫자 필드를 합산한다 (폴백)", () => {
     expect(
       extractTotalTokens({ cost: { total_input_tokens: 100, total_output_tokens: 50, total_cost_usd: 1.5 } }),
     ).toBe(150);
   });
-  it("cost가 없거나 형태가 다르면 0", () => {
+  it("둘 다 없거나 형태가 다르면 0", () => {
     expect(extractTotalTokens({})).toBe(0);
     expect(extractTotalTokens(null)).toBe(0);
-    expect(extractTotalTokens({ cost: "x" })).toBe(0);
+    expect(extractTotalTokens({ cost: "x", context_window: "y" })).toBe(0);
   });
 });
 
